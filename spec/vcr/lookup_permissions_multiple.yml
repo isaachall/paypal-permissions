@@ -1,0 +1,53 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://svcs.sandbox.paypal.com:443/Permissions/GetPermissions
+    body: token=M-RTGNyaZP5OMNIUxkH29I53eFvQhTJk3UfByH4pWfjSQHlj5csUVA&requestEnvelope.errorLanguage=en_US
+    headers:
+      x-paypal-security-userid:
+      - test_user_api1.recurly.com
+      x-paypal-security-password:
+      - '1234567890'
+      x-paypal-security-signature:
+      - AW123412341234123412341234123412341234123412341234123412
+      x-paypal-request-data-format:
+      - NV
+      x-paypal-response-data-format:
+      - NV
+      x-paypal-application-id:
+      - APP-80W284485P519543T
+      content-type:
+      - application/x-www-form-urlencoded
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 28 Jul 2011 03:06:49 GMT
+      server:
+      - Apache-Coyote/1.1
+      x-paypal-message-protocol:
+      - NONE
+      x-paypal-response-data-format:
+      - NV
+      x-ebay-soa-request-id:
+      - 1316eb56-55c0-a486-d647-d8d7ffffffb9!Permissions!10.72.109.100![]
+      x-paypal-operation-name:
+      - GetPermissions
+      x-paypal-service-name:
+      - ! '{http://svcs.paypal.com/types/perm}Permissions'
+      x-paypal-service-version:
+      - 1.0.0
+      content-type:
+      - text/plain;charset=UTF-8
+      set-cookie:
+      - Apache=10.72.109.11.1311822406811670; path=/; expires=Sat, 20-Jul-41 03:06:46
+        GMT
+      vary:
+      - Accept-Encoding
+      transfer-encoding:
+      - chunked
+    body: responseEnvelope.timestamp=2011-07-27T20%3A06%3A49.264-07%3A00&responseEnvelope.ack=Success&responseEnvelope.correlationId=783aab5a565a2&responseEnvelope.build=1860631&scope(0)=EXPRESS_CHECKOUT&scope(1)=REFUND&scope(2)=DIRECT_PAYMENT&scope(3)=AUTH_CAPTURE&scope(4)=TRANSACTION_DETAILS
+    http_version: '1.1'

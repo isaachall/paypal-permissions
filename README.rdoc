@@ -1,19 +1,72 @@
-= paypalpermissions
+# Paypal Permissions
 
-Description goes here.
+Ruby implementation of the [PayPal Permissions API](https://www.x.com/community/ppx/permissions).
 
-== Contributing to paypalpermissions
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+Please visit PayPal's [Permissions Service API developer forums](https://www.x.com/community/ppx/permissions?view=discussions) for questions about the Permissions API.
 
-== Copyright
+## Example
 
-Copyright (c) 2011 Isaac Hall. See LICENSE.txt for
-further details.
+### Step 1: Direct the user to the "Grant Permissions" on PayPal
+    
+    paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
+    request_data = paypal.request_permissions(
+      [:express_checkout, :direct_payment, :auth_capture, :refund, :transaction_details],
+      'http://localhost/callback_url'
+    )
+    
+    # Send the browser to :permissions_url to grant permission to your application
+    redirect_to request_data[:permissions_url]
 
+### Step 2: Lookup result to get the final permission token
+
+    paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
+    token_data = paypal.get_access_token( params['token'], params['verifier'] )
+    
+    # Save token_data[:token] and token_data[:token_secret]
+
+### Step 3: Make API calls with the `X-PP-AUTHORIZATION` header
+
+Use the `:token` and `:token_secret`, along with your own API credentials, to create the `X-PP-AUTHORIZATION` header.
+
+    signature = paypal.generate_signature(api_key, secret, token, token_secret, 'POST', 'https://api.paypal.com/nvp')
+    header = { 'X-PP-AUTHORIZATION' => signature }
+
+### Lookup granted permissions
+
+    scopes = paypal.lookup_permissions paypal_token
+
+### Cancel granted permissions
+
+    paypal.cancel_permissions paypal_token
+
+## Available Permissions
+
+    :express_checkout
+    :direct_payment
+    :settlement_consolidation
+    :settlement_reporting
+    :auth_capture
+    :mobile_checkout
+    :billing_agreement
+    :reference_transaction
+    :air_travel
+    :mass_pay
+    :transaction_details
+    :transaction_search
+    :recurring_payments
+    :account_balance
+    :encrypted_website_payments
+    :refund
+    :non_referenced_credit
+    :button_manager
+    :manage_pending_transaction_status
+    :recurring_payment_report
+    :extended_pro_processing_report
+    :exception_processing_report
+    :account_management_permission
+
+## Copyright
+
+Copyright (c) 2011 Recurly. MIT License
+
+Original version by Isaac Hall.
