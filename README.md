@@ -7,37 +7,47 @@ Please visit PayPal's [Permissions Service API developer forums](https://www.x.c
 ## Example
 
 ### Step 1: Direct the user to the "Grant Permissions" on PayPal
-    
-    paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
-    request_data = paypal.request_permissions(
-      [:express_checkout, :direct_payment, :auth_capture, :refund, :transaction_details],
-      'http://localhost/callback_url'
-    )
-    
-    # Send the browser to :permissions_url to grant permission to your application
-    redirect_to request_data[:permissions_url]
+
+~~~~~ ruby
+paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
+request_data = paypal.request_permissions(
+  [:express_checkout, :direct_payment, :auth_capture, :refund, :transaction_details],
+  'http://localhost/callback_url'
+)
+
+# Send the browser to :permissions_url to grant permission to your application
+redirect_to request_data[:permissions_url]
+~~~~~
 
 ### Step 2: Lookup result to get the final permission token
 
-    paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
-    token_data = paypal.get_access_token( params['token'], params['verifier'] )
-    
-    # Save token_data[:token] and token_data[:token_secret]
+~~~~~ ruby
+paypal = PaypalPermissions::Paypal.new( userid, password, signature, application_id, :production )
+token_data = paypal.get_access_token( params['token'], params['verifier'] )
+
+# Save token_data[:token] and token_data[:token_secret]
+~~~~~
 
 ### Step 3: Make API calls with the `X-PP-AUTHORIZATION` header
 
 Use the `:token` and `:token_secret`, along with your own API credentials, to create the `X-PP-AUTHORIZATION` header.
 
-    signature = paypal.generate_signature(api_key, secret, token, token_secret, 'POST', 'https://api.paypal.com/nvp')
-    header = { 'X-PP-AUTHORIZATION' => signature }
+~~~~~ ruby
+signature = paypal.generate_signature(api_key, secret, token, token_secret, 'POST', 'https://api.paypal.com/nvp')
+header = { 'X-PP-AUTHORIZATION' => signature }
+~~~~~
 
 ### Lookup granted permissions
 
-    scopes = paypal.lookup_permissions paypal_token
+~~~~~ ruby
+scopes = paypal.lookup_permissions paypal_token
+~~~~~
 
 ### Cancel granted permissions
 
-    paypal.cancel_permissions paypal_token
+~~~~~ ruby
+paypal.cancel_permissions paypal_token
+~~~~~
 
 ## Available Permissions
 
