@@ -1,3 +1,4 @@
 .bundle
 .DS_Store
 spec/sandbox_credentials.yml
+*.gem
