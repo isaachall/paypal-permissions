@@ -2,7 +2,7 @@ require 'base64'
 require 'openssl'
 require 'uri'
 
-module PaypalPermissions
+module Paypal::Permissions
   module Oauth
 
     # Note: OAuth does not encode '.', but PayPal does.

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module PaypalPermissions
+module Paypal::Permissions
   describe Oauth do
     before(:each) do
       @api_key      = 'user.test.com'

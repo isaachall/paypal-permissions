@@ -20,12 +20,6 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Ruby implementation of the PayPal Permissions API.}
   gem.email = "isaac@isaachall.com"
   gem.authors = ["Isaac Hall"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  gem.add_runtime_dependency 'httpclient'
-  gem.add_development_dependency 'rspec', '> 2.0.0'
-  gem.add_development_dependency 'vcr'
-  gem.add_development_dependency 'webmock'
 end
 Jeweler::RubygemsDotOrgTasks.new
 

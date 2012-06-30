@@ -3,7 +3,7 @@ require 'net/https'
 require 'uri'
 require 'cgi'
 
-module PaypalPermissions
+module Paypal::Permissions
   class Paypal
     include Oauth
 
@@ -61,7 +61,7 @@ module PaypalPermissions
       permissions_scopes.each_with_index { |ps,index| request_data["scope(#{index})"] = PERMISSIONS[ps] }
       data = call(url, request_data)
 
-      raise PaypalPermissions::FaultMessage.new(data) unless data['token']
+      raise ::Paypal::Permissions::FaultMessage.new(data) unless data['token']
 
       # Redirect URL:
       # https://www.paypal.com/cgi-bin/webscr?cmd=_grant-permission&request_token= + token
@@ -77,7 +77,7 @@ module PaypalPermissions
       url = create_url('GetAccessToken')
       data = call(url, { 'token' => token, 'verifier' => verifier })
 
-      raise PaypalPermissions::FaultMessage.new(data) unless (data['token'] && data['tokenSecret'])
+      raise ::Paypal::Permissions::FaultMessage.new(data) unless (data['token'] && data['tokenSecret'])
 
       {
         token:        data['token'],
@@ -92,7 +92,7 @@ module PaypalPermissions
       data = call(url, { 'token' => token })
 
       paypal_scopes = parse_scopes(data)
-      raise PaypalPermissions::FaultMessage.new(data) if paypal_scopes.empty?
+      raise ::Paypal::Permissions::FaultMessage.new(data) if paypal_scopes.empty?
 
       { scopes: paypal_scopes }
     end
@@ -135,12 +135,12 @@ module PaypalPermissions
         case code.to_i
         when 200
           data = get_hash(response.body)
-          raise PaypalPermissions::FaultMessage.new(data) if data['responseEnvelope.ack'] == 'Failure'
+          raise ::Paypal::Permissions::FaultMessage.new(data) if data['responseEnvelope.ack'] == 'Failure'
           return data
         when 500
-          raise PaypalPermissions::InternalServerError.new(response.body)
+          raise ::Paypal::Permissions::InternalServerError.new(response.body)
         else
-          raise PaypalPermissions::UnknownResponse.new(code.to_i, response.body)
+          raise ::Paypal::Permissions::UnknownResponse.new(code.to_i, response.body)
         end
       end
     end

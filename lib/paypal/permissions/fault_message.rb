@@ -1,12 +1,12 @@
-module PaypalPermissions
+module Paypal::Permissions
   # Base error class
   class Error < Exception; end
 
   # PayPal returned a 500 Internal Server Error. Retry?
-  class InternalServerError < PaypalPermissions::Error; end
+  class InternalServerError < ::Paypal::Permissions::Error; end
 
   # PayPal returned an unexpected error message
-  class UnknownResponse < PaypalPermissions::Error
+  class UnknownResponse < ::Paypal::Permissions::Error
     attr_accessor :response_code
 
     def initialize(response_code, message)
@@ -39,7 +39,7 @@ module PaypalPermissions
       @correlation_id = options['correlationId']
       @build          = options['build']
       @errors         = collect_errors(options)
-      
+
       @message = @ack
     end
 
@@ -47,9 +47,9 @@ module PaypalPermissions
     def collect_errors(options={})
       errors = []
       error_number = 0
-      
+
       while options["error(#{error_number}).errorId"]
-        errors << PaypalPermissions::FaultMessage::ErrorInformation.new(options, error_number)
+        errors << ::Paypal::Permissions::FaultMessage::ErrorInformation.new(options, error_number)
         error_number = error_number + 1
       end
       errors
