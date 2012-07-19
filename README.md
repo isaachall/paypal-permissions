@@ -9,7 +9,7 @@ Please visit PayPal's [Permissions Service API developer forums](https://www.x.c
 ### Step 1: Direct the user to the "Grant Permissions" on PayPal
 
 ~~~~~ ruby
-paypal = PayPal::Permissions::Paypal.new( userid, password, signature, application_id, :production )
+paypal = Paypal::Permissions::Paypal.new( userid, password, signature, application_id, :production )
 request_data = paypal.request_permissions(
   [:express_checkout, :direct_payment, :auth_capture, :refund, :transaction_details],
   'http://localhost/callback_url'
@@ -22,7 +22,7 @@ redirect_to request_data[:permissions_url]
 ### Step 2: Lookup result to get the final permission token
 
 ~~~~~ ruby
-paypal = PayPal::Permissions::Paypal.new( userid, password, signature, application_id, :production )
+paypal = Paypal::Permissions::Paypal.new( userid, password, signature, application_id, :production )
 token_data = paypal.get_access_token( params['token'], params['verifier'] )
 
 # Save token_data[:token] and token_data[:token_secret]
