@@ -20,7 +20,7 @@ RSpec.configure do |config|
   config.before(:all) do
     credentials = YAML.load(File.read(File.join(File.dirname(__FILE__), 'sandbox_credentials.yml')))
     @paypal = Paypal::Permissions::Paypal.new(
-      credentials['userid'], credentials['password'],credentials['signature'],credentials['application_id'],credentials['mode']
+      credentials['userid'], credentials['password'], credentials['signature'], credentials['application_id'], credentials['mode'].to_sym
     )
   end
 end
