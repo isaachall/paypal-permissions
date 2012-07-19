@@ -19,6 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{Ruby implementation of the PayPal Permissions API.}
   gem.description = %Q{Ruby implementation of the PayPal Permissions API.}
   gem.email = "isaac@isaachall.com"
+  gem.add_dependency 'httparty', '~> 0.8.3'
   gem.authors = ["Isaac Hall"]
 end
 Jeweler::RubygemsDotOrgTasks.new
