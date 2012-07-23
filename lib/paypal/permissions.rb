@@ -4,6 +4,7 @@ require 'paypal/permissions/oauth'
 require 'paypal/permissions/paypal'
 
 # configuration
-module Paypal::Permissions
-
+module Paypal
+  module Permissions
+  end
 end
