@@ -17,6 +17,8 @@ module Paypal
       SANDBOX_GRANT_PERMISSION_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_grant-permission&request_token='
       PRODUCTION_GRANT_PERMISSION_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_grant-permission&request_token='
 
+
+      # From https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_PermissionsAbout
       PERMISSIONS = {
         :express_checkout => 'EXPRESS_CHECKOUT',
         :direct_payment => 'DIRECT_PAYMENT',
@@ -36,11 +38,14 @@ module Paypal
         :refund => 'REFUND',
         :non_referenced_credit => 'NON_REFERENCED_CREDIT',
         :button_manager => 'BUTTON_MANAGER',
+        :access_basic_personal_data => 'ACCESS_BASIC_PERSONAL_DATA',
+        :access_advanced_personal_data => 'ACCESS_ADVANCED_PERSONAL_DATA',
         :manage_pending_transaction_status => 'MANAGE_PENDING_TRANSACTION_STATUS',
         :recurring_payment_report => 'RECURRING_PAYMENT_REPORT',
         :extended_pro_processing_report => 'EXTENDED_PRO_PROCESSING_REPORT',
         :exception_processing_report => 'EXCEPTION_PROCESSING_REPORT',
         :account_management_permission => 'ACCOUNT_MANAGEMENT_PERMISSION',
+        :invoicing => 'INVOICING'
       }
 
       # Credentials: UserID, Password, Signature, Application ID
